@@ -1,0 +1,56 @@
+<div class="space-y-6">
+   
+    <div class="flex justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">Consultas</h1>
+            <p class="text-gray-600">Gerenciamento de consultas</p>
+        </div>
+
+        <p-button label="Nova Consulta" icon="fa fa-plus" (onClick)="showDialog()"></p-button>
+    </div>
+    <div class="bg-white rounded-xl shadow-sm p-4">
+
+        <div class="flex flex-row gap-4">
+            <p-select [options]="filtrosData"></p-select>
+            <p-select [options]="filtrosProfissionais"></p-select>
+            <p-select [options]="filtrosStatus"></p-select>
+        </div>
+    </div>
+
+    <p-table [value]="consultas" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template #header>
+            <tr>
+                <th>Horário</th>
+                <th>Paciente</th>
+                <th>Profissional</th>
+                <th>Tipo</th>
+                <th>Status</th>
+                <th>
+                    <div class="text-right">Ações</div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-consulta>
+            <tr>
+                <td>{{ consulta.horario }}</td>
+                <td>{{ consulta.name }}</td>
+                <td>{{ consulta.profissional }}</td>
+                <td>{{ consulta.tipo }}</td>
+                <td>
+                    <app-registro-status-tag [status]="consulta.status"/>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    </div>
+
+    <p-dialog header="Nova Consulta" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+                                <div class="flex flex-col gap-4 mb-4">
+                    <label for="paciente" class="font-semibold w-24">Paciente</label>
+                    <input pInputText id="username" class="flex-auto" autocomplete="off" />
+                </div>
+                <div class="flex justify-end gap-2">
+                    <p-button label="Cancelar" severity="secondary" (click)="visible = false" />
+                    <p-button label="Agendar" (click)="visible = false" />
+                </div>
+            </p-dialog>
